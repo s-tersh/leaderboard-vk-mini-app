@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar, View, Panel, PanelHeader, Tabs, TabsItem, Cell, HorizontalScroll } from '@vkontakte/vkui';
+import { Avatar, View, Panel, Tabs, TabsItem, Cell, HorizontalScroll, List, Group } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 
 export class Leaderboards extends React.Component {
@@ -8,21 +8,22 @@ export class Leaderboards extends React.Component {
         this.state = {
             activeModal: null,
             activePanel: "results",
-            viewGender: "M",
-            viewPage: "Result BSS 20",
-            data: this.props.data["Result BSS 20 M"].elements,
+            viewGender: this.props.gender,
+            viewPage: this.props.page,
+            data: this.props.data[this.props.page + " "  + this.props.gender].elements,
         };
 
         this.onChangeGender = this.onChangeGender.bind(this);
         this.onChangePage = this.onChangePage.bind(this);
         this.sumReps = this.sumReps.bind(this);
     }
-    
+
     onChangeGender(e) {
         this.setState({ 
             viewGender: e.currentTarget.dataset.gender,
             data: this.props.data[this.state.viewPage + " " + e.currentTarget.dataset.gender].elements,
         });
+        this.props.onChangePage(this.state.viewPage, e.currentTarget.dataset.gender);
     }
 
     onChangePage(e) {
@@ -30,6 +31,7 @@ export class Leaderboards extends React.Component {
             viewPage: e.currentTarget.dataset.page,
             data: this.props.data[e.currentTarget.dataset.page + " " + this.state.viewGender].elements
         });
+        this.props.onChangePage(e.currentTarget.dataset.page, this.state.viewGender);
     }
 
     sumReps(...theArgs) {
@@ -58,26 +60,29 @@ export class Leaderboards extends React.Component {
                             <TabsItem onClick={this.onChangePage} selected={viewPage === "BSS 20.3"} data-page="BSS 20.3">20.3</TabsItem>
                         </Tabs>
                     </HorizontalScroll>
-
-                    {data.map((item, id) => {
-                        let elem;
-                        switch(viewPage) {
-                            case "Result BSS 20":
-                                elem = <Cell key={id} data-index={item["#"]} before={<Avatar><h3>{item["Место"]}</h3></Avatar>} description={item["Сумма баллов"] + " points"}>{item["Участник"]}</Cell>
-                                break;
-                            case "BSS 20.1":
-                                elem = <Cell key={id} before={<Avatar><h3>{item["Место"]}</h3></Avatar>} description={this.sumReps(parseInt(item["Повторения 1"]), parseInt(item["Повторения 2"])) === 0 ? "0 reps" : this.sumReps(parseInt(item["Повторения 1"]), parseInt(item["Повторения 2"])) + " reps"}>{item["Участник"]}</Cell>
-                                break;
-                            case "BSS 20.2":
-                                elem = <Cell key={id} before={<Avatar><h3>{item["Место"]}</h3></Avatar>} description={item["Суммарный вес"] + " kilos"}>{item["Участник"]}</Cell>
-                                break;
-                            case "BSS 20.3":
-                                elem = <Cell key={id} before={<Avatar><h3>{item["Место"]}</h3></Avatar>} description={item["Время"] + " | " + item["Повторения"] + " reps"}>{item["Участник"]}</Cell>
-                                break;
-                            default: break;
-                        }
-                        return elem;
-                    })}
+                    <Group>
+                        <List>
+                            {data.map((item, id) => {
+                                let elem;
+                                switch(viewPage) {
+                                    case "Result BSS 20":
+                                        elem = <Cell key={id} data-index={item["#"]} before={<Avatar><h3>{item["Место"]}</h3></Avatar>} description={item["Сумма баллов"] + " points"}>{item["Участник"]}</Cell>
+                                        break;
+                                    case "BSS 20.1":
+                                        elem = <Cell key={id} before={<Avatar><h3>{item["Место"]}</h3></Avatar>} description={this.sumReps(parseInt(item["Повторения 1"]), parseInt(item["Повторения 2"])) === 0 ? "0 reps" : this.sumReps(parseInt(item["Повторения 1"]), parseInt(item["Повторения 2"])) + " reps"}>{item["Участник"]}</Cell>
+                                        break;
+                                    case "BSS 20.2":
+                                        elem = <Cell key={id} before={<Avatar><h3>{item["Место"]}</h3></Avatar>} description={item["Суммарный вес"] + " kilos"}>{item["Участник"]}</Cell>
+                                        break;
+                                    case "BSS 20.3":
+                                        elem = <Cell key={id} before={<Avatar><h3>{item["Место"]}</h3></Avatar>} description={item["Время"] + " | " + item["Повторения"] + " reps"}>{item["Участник"]}</Cell>
+                                        break;
+                                    default: break;
+                                }
+                                return elem;
+                            })}
+                        </List>
+                    </Group>
                 </Panel>
             </View>
         );
