@@ -44,12 +44,12 @@ export class Leaderboards extends React.Component {
         return (
             <View activePanel={this.state.activePanel}>
                 <Panel id="results">
-                    <PanelHeader>
+                    <HorizontalScroll>
                         <Tabs>
                             <TabsItem onClick={this.onChangeGender} selected={viewGender === 'M'} data-gender="M">Мужчины</TabsItem>
                             <TabsItem onClick={this.onChangeGender} selected={viewGender === 'W'} data-gender="W">Женщины</TabsItem>
                         </Tabs>
-                    </PanelHeader>
+                    </HorizontalScroll>
                     <HorizontalScroll>
                         <Tabs>
                             <TabsItem onClick={this.onChangePage} selected={viewPage === "Result BSS 20"} data-page="Result BSS 20">Итог</TabsItem>
