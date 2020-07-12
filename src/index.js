@@ -2,10 +2,11 @@ import React from "react";
 import ReactDOM from 'react-dom';
 import { View, Panel, PanelHeader, PanelSpinner } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
+import bridge from '@vkontakte/vk-bridge';
 import Tabletop from 'tabletop';
-
 import { Leaderboards } from "./Leaderboards";
 
+bridge.send("VKWebAppInit", {});
 
 export default class App extends React.Component {
 
