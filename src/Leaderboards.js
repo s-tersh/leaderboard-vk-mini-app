@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar, View, Panel, Tabs, TabsItem, Cell, HorizontalScroll, List, Group } from '@vkontakte/vkui';
+import { Avatar, View, Panel, Tabs, TabsItem, Cell, HorizontalScroll, List, Group, Counter } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 
 export class Leaderboards extends React.Component {
@@ -10,6 +10,8 @@ export class Leaderboards extends React.Component {
             activePanel: "results",
             viewGender: this.props.gender,
             viewPage: this.props.page,
+            MData: this.props.data["M"].elements,
+            WData: this.props.data["W"].elements,
             data: this.props.data[this.props.page + " "  + this.props.gender].elements,
         };
 
@@ -41,15 +43,15 @@ export class Leaderboards extends React.Component {
     }
 
     render() {
-        const { data, viewGender, viewPage } = this.state;
+        const { data, MData, WData, viewGender, viewPage } = this.state;
 
         return (
             <View activePanel={this.state.activePanel}>
                 <Panel id="results">
                     <HorizontalScroll>
                         <Tabs>
-                            <TabsItem onClick={this.onChangeGender} selected={viewGender === 'M'} data-gender="M">Мужчины</TabsItem>
-                            <TabsItem onClick={this.onChangeGender} selected={viewGender === 'W'} data-gender="W">Женщины</TabsItem>
+                            <TabsItem onClick={this.onChangeGender} selected={viewGender === 'M'} data-gender="M" after={<Counter size="s">{MData.length}</Counter>}>Мужчины</TabsItem>
+                            <TabsItem onClick={this.onChangeGender} selected={viewGender === 'W'} data-gender="W" after={<Counter size="s">{WData.length}</Counter>}>Женщины</TabsItem>
                         </Tabs>
                     </HorizontalScroll>
                     <HorizontalScroll>
@@ -66,16 +68,16 @@ export class Leaderboards extends React.Component {
                                 let elem;
                                 switch(viewPage) {
                                     case "Result BSS 20":
-                                        elem = <Cell key={id} data-index={item["#"]} before={<Avatar><h3>{item["Место"]}</h3></Avatar>} description={item["Сумма баллов"] + " points"}>{item["Участник"]}</Cell>
+                                        elem = <Cell key={id} data-index={item["#"]} before={<Avatar><h3>{item["Место"]}</h3></Avatar>} description={item["Сумма баллов"] + " points"}>{item["Участник"]}</Cell>;
                                         break;
                                     case "BSS 20.1":
-                                        elem = <Cell key={id} before={<Avatar><h3>{item["Место"]}</h3></Avatar>} description={this.sumReps(parseInt(item["Повторения 1"]), parseInt(item["Повторения 2"])) === 0 ? "0 reps" : this.sumReps(parseInt(item["Повторения 1"]), parseInt(item["Повторения 2"])) + " reps"}>{item["Участник"]}</Cell>
+                                        elem = <Cell key={id} before={<Avatar><h3>{item["Место"]}</h3></Avatar>} description={item["Повторения 1"] + " reps | " + item["Повторения 2"] + " reps" }>{item["Участник"]}</Cell>;
                                         break;
                                     case "BSS 20.2":
-                                        elem = <Cell key={id} before={<Avatar><h3>{item["Место"]}</h3></Avatar>} description={item["Суммарный вес"] + " kilos"}>{item["Участник"]}</Cell>
+                                        elem = <Cell key={id} before={<Avatar><h3>{item["Место"]}</h3></Avatar>} description={item["Вес 1"] + " kg | " + item["Вес 2"] + " kg | " + item["Вес 3"] + " kg | " + item["Вес 4"] + " kg"}>{item["Участник"]}</Cell>;
                                         break;
                                     case "BSS 20.3":
-                                        elem = <Cell key={id} before={<Avatar><h3>{item["Место"]}</h3></Avatar>} description={item["Время"] + " | " + item["Повторения"] + " reps"}>{item["Участник"]}</Cell>
+                                        elem = <Cell key={id} before={<Avatar><h3>{item["Место"]}</h3></Avatar>} description={item["Время"] + " / " + item["Повторения"] + " reps"}>{item["Участник"]}</Cell>;
                                         break;
                                     default: break;
                                 }
