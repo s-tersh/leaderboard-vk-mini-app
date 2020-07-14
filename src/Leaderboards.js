@@ -18,6 +18,12 @@ export class Leaderboards extends React.Component {
         this.onChangeGender = this.onChangeGender.bind(this);
         this.onChangePage = this.onChangePage.bind(this);
         this.sumReps = this.sumReps.bind(this);
+        this.getAvatarURL = this.getAvatarURL.bind(this);
+    }
+
+    getAvatarURL(hash) {
+        let item = this.props.data["Sportsmens"].elements.filter(item => item["#"] === hash.toString());
+        return item[0] ? item[0]["Avatar"] : "empty";
     }
 
     onChangeGender(e) {
@@ -68,16 +74,24 @@ export class Leaderboards extends React.Component {
                                 let elem;
                                 switch(viewPage) {
                                     case "Result BSS 20":
-                                        elem = <Cell key={id} data-index={item["#"]} before={<Avatar><h3>{item["Место"]}</h3></Avatar>} description={item["Сумма баллов"] + " points"}>{item["Участник"]}</Cell>;
+                                        elem = <div key={id} style={{display: 'flex', flexDirection: 'row', paddingLeft: '18px'}}><h4 style={{width: '24px', textAlign: 'center', color: 'darkgray'}}>{item["Место"]}</h4>
+                                        <Cell data-index={item["#"]} before={<Avatar src={this.getAvatarURL(item["#"])}></Avatar>} description={item["Сумма баллов"] + " points"}>{item["Участник"]}</Cell>
+                                        </div>
                                         break;
                                     case "BSS 20.1":
-                                        elem = <Cell key={id} before={<Avatar><h3>{item["Место"]}</h3></Avatar>} description={item["Повторения 1"] + " reps | " + item["Повторения 2"] + " reps" }>{item["Участник"]}</Cell>;
+                                        elem = <div key={id} style={{display: 'flex', flexDirection: 'row', paddingLeft: '18px'}}><h4 style={{width: '24px', textAlign: 'center', color: 'darkgray'}}>{item["Место"]}</h4>
+                                        <Cell before={<Avatar src={this.getAvatarURL(item["#"])}></Avatar>} description={item["Повторения 1"] + " reps | " + item["Повторения 2"] + " reps" }>{item["Участник"]}</Cell>;
+                                        </div>
                                         break;
                                     case "BSS 20.2":
-                                        elem = <Cell key={id} before={<Avatar><h3>{item["Место"]}</h3></Avatar>} description={item["Вес 1"] + " kg | " + item["Вес 2"] + " kg | " + item["Вес 3"] + " kg | " + item["Вес 4"] + " kg"}>{item["Участник"]}</Cell>;
+                                        elem = <div key={id} style={{display: 'flex', flexDirection: 'row', paddingLeft: '18px'}}><h4 style={{width: '24px', textAlign: 'center', color: 'darkgray'}}>{item["Место"]}</h4>
+                                        <Cell before={<Avatar src={this.getAvatarURL(item["#"])}></Avatar>} description={item["Вес 1"] + " kg | " + item["Вес 2"] + " kg | " + item["Вес 3"] + " kg | " + item["Вес 4"] + " kg"}>{item["Участник"]}</Cell>;
+                                        </div>
                                         break;
                                     case "BSS 20.3":
-                                        elem = <Cell key={id} before={<Avatar><h3>{item["Место"]}</h3></Avatar>} description={item["Время"] + " / " + item["Повторения"] + " reps"}>{item["Участник"]}</Cell>;
+                                        elem = <div key={id} style={{display: 'flex', flexDirection: 'row', paddingLeft: '18px'}}><h4 style={{width: '24px', textAlign: 'center', color: 'darkgray'}}>{item["Место"]}</h4>
+                                        <Cell before={<Avatar src={this.getAvatarURL(item["#"])}></Avatar>} description={item["Время"] + " / " + item["Повторения"] + " reps"}>{item["Участник"]}</Cell>;
+                                        </div>
                                         break;
                                     default: break;
                                 }
