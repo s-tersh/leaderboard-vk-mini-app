@@ -80,17 +80,17 @@ export class Leaderboards extends React.Component {
                                         break;
                                     case "BSS 20.1":
                                         elem = <div key={id} style={{display: 'flex', flexDirection: 'row', paddingLeft: '18px'}}><h4 style={{width: '24px', textAlign: 'center', color: 'darkgray'}}>{item["Место"]}</h4>
-                                        <Cell before={<Avatar src={this.getAvatarURL(item["#"])}></Avatar>} description={item["Повторения 1"] + " reps | " + item["Повторения 2"] + " reps" }>{item["Участник"]}</Cell>;
+                                        <Cell before={<Avatar src={this.getAvatarURL(item["#"])}></Avatar>} description={item["Повторения 1"] + " reps | " + item["Повторения 2"] + " reps" }>{item["Участник"]}</Cell>
                                         </div>
                                         break;
                                     case "BSS 20.2":
                                         elem = <div key={id} style={{display: 'flex', flexDirection: 'row', paddingLeft: '18px'}}><h4 style={{width: '24px', textAlign: 'center', color: 'darkgray'}}>{item["Место"]}</h4>
-                                        <Cell before={<Avatar src={this.getAvatarURL(item["#"])}></Avatar>} description={item["Вес 1"] + " kg | " + item["Вес 2"] + " kg | " + item["Вес 3"] + " kg | " + item["Вес 4"] + " kg"}>{item["Участник"]}</Cell>;
+                                        <Cell before={<Avatar src={this.getAvatarURL(item["#"])}></Avatar>} description={item["Вес 1"] + " kg | " + item["Вес 2"] + " kg | " + item["Вес 3"] + " kg | " + item["Вес 4"] + " kg"}>{item["Участник"]}</Cell>
                                         </div>
                                         break;
                                     case "BSS 20.3":
                                         elem = <div key={id} style={{display: 'flex', flexDirection: 'row', paddingLeft: '18px'}}><h4 style={{width: '24px', textAlign: 'center', color: 'darkgray'}}>{item["Место"]}</h4>
-                                        <Cell before={<Avatar src={this.getAvatarURL(item["#"])}></Avatar>} description={item["Время"] + " / " + item["Повторения"] + " reps"}>{item["Участник"]}</Cell>;
+                                        <Cell before={<Avatar src={this.getAvatarURL(item["#"])}></Avatar>} description={item["Время"] + " / " + item["Повторения"] + " reps"}>{item["Участник"]}</Cell>
                                         </div>
                                         break;
                                     default: break;
